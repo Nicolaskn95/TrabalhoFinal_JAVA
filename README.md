@@ -1,4 +1,6 @@
-<h1 align="center"> **Trabalho Final em Java e OracleDB** </h1> :java45: ![java](https://github.com/Nicolaskn95/TrabalhoFinal_JAVA/assets/89322083/d6916460-526f-43bf-9bb5-bef2ef53a251)
+<h1 align="center"> **Trabalho Final em Java e OracleDB** </h1>
+![image](https://your-image-url.type) with <img src="![java](https://github.com/Nicolaskn95/TrabalhoFinal_JAVA/assets/89322083/7a406f45-c8a8-4f7f-9376-6d993b5fb952)
+" width="600">
 
 
 
