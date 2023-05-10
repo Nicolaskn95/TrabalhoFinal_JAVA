@@ -7,9 +7,7 @@
   </a>
 <br/>
 
-<p>
 - [ ] Primeira Entrega
 - [ ] Segunda Entrega
 - [ ] Terceira Entrega
 - [ ] Quarta Entrega
-</p>
