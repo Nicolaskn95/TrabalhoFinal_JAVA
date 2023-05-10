@@ -1,10 +1,10 @@
 # TrabalhoFinal_JAVA
-Trabalho Final em Java e OracleDB
+
+<h1 align="center"> Trabalho Final em Java e OracleDB </h1>
 
 
 
 - [ ] Primeira Entrega
-  <summary>link: trabalho</summary>
 - [ ] Segunda Entrega
 - [ ] Terceira Entrega
 - [ ] Quarta Entrega
