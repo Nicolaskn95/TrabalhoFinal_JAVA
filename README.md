@@ -3,8 +3,8 @@
     <img align="center" alt="Icon Java" height="50" src="https://github.com/Nicolaskn95/TrabalhoFinal_JAVA/blob/main/assets/java.GIF" />
   </a> 
   <a href="">
-    <img align="center" alt="Icon Java" height="50" src="https://github.com/Nicolaskn95/TrabalhoFinal_JAVA/blob/main/assets/icon.png" />
-  </a> <br/>
+    <img align="center" alt="Icon Java" height="50" src="https://github.com/Nicolaskn95/TrabalhoFinal_JAVA/blob/main/assets/icon.png" <br/>/>
+  </a> 
 
 
 - [ ] Primeira Entrega
