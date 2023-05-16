@@ -8,10 +8,11 @@ public class Cliente extends Pessoa{
     private double limiteDisp;
     private ArrayList<Pedido> pedidos; //multiplicidade 1..*
 
-    public Cliente(String cpf, String nome,double limiteCred) {
+    public Cliente(String cpf, String nome, double limiteCred) {
         super(cpf, nome);
         this.limiteCred = limiteCred;
-        pedidos = new ArrayList<Pedido>();
+        limiteDisp = limiteCred;
+        this.pedidos = new ArrayList<Pedido>();
     }      
 
     public double getLimiteCred() {
