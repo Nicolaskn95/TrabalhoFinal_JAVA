@@ -29,5 +29,9 @@ public class Vendedor extends Pessoa{
     public double getTaxaComissao() {
         return taxaComissao;
     }
-    
+
+    public void addPedido(Pedido pedido) {
+        pedido.setVendedor(this);
+        pedidos.add(pedido);
+    }
 }

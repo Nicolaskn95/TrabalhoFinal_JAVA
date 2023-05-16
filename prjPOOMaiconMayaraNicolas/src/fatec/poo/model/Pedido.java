@@ -9,6 +9,8 @@ public class Pedido {
     private String dataPagto;
     private boolean formaPagto;
     private boolean situacao;
+    private Cliente cliente;
+    private Vendedor vendedor;
     private ArrayList<ItemPedido> itensPedido;//multiplicade
 
     public Pedido(String numero, String dataEmissao) {
@@ -49,4 +51,18 @@ public class Pedido {
         this.situacao = situacao;
     }
     
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
+    }
+
+    public void addItemPedido(ItemPedido itemPedido) {
+        itemPedido.setPedido(this);
+        itensPedido.add(itemPedido);
+        double novoLimiteDisponivel = cliente.getLimiteDisp() - (itemPedido.getQtdeVendida() * itemPedido.getProduto().getPreco());
+        cliente.setLimiteDisp(novoLimiteDisponivel);
+    }
 }

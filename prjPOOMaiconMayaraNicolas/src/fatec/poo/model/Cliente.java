@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Cliente extends Pessoa{
     private double limiteCred;
     private double limiteDisp;
+
     private ArrayList<Pedido> pedidos; //multiplicidade 1..*
 
     public Cliente(String cpf, String nome, double limiteCred) {
@@ -25,7 +26,14 @@ public class Cliente extends Pessoa{
 
     public void setLimiteCred(double limiteCred) {
         this.limiteCred = limiteCred;
-        limiteDisp = limiteCred;
-        
+    }
+
+    public void addPedido(Pedido pedido) {
+        pedido.setCliente(this);
+        pedidos.add(pedido);
+    }
+    
+    public void setLimiteDisp(double limiteDisp) {
+        this.limiteDisp = limiteDisp;
     }
 }
