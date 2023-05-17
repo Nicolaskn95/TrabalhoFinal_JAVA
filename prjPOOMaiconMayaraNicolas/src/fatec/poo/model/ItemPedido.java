@@ -16,6 +16,8 @@ public class ItemPedido{
     }
 
     public void setQtdeVendida(double qtdeVendida) {
+        double novaQtdeVendida = produto.getQtdeEstoque() + (this.qtdeVendida - qtdeVendida);
+        produto.setQtdeEstoque(novaQtdeVendida);
         this.qtdeVendida = qtdeVendida;
     }
 
