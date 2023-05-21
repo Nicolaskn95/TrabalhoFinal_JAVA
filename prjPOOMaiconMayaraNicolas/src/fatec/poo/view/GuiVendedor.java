@@ -90,11 +90,21 @@ public class GuiVendedor extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.setEnabled(false);
+
         try {
             jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+
+        jTextField2.setEnabled(false);
+
+        jTextField3.setEnabled(false);
+
+        jTextField4.setEnabled(false);
+
+        jTextField5.setEnabled(false);
 
         jLabel7.setText("UF");
 
@@ -102,7 +112,14 @@ public class GuiVendedor extends javax.swing.JFrame {
 
         jLabel9.setText("Taxa de Comissão");
 
+        jTextField7.setEnabled(false);
+
+        jTextField8.setEnabled(false);
+
         cbxUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        cbxUF.setEnabled(false);
+
+        jTextField9.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
