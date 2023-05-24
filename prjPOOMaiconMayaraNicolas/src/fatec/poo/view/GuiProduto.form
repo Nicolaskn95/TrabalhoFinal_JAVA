@@ -112,7 +112,7 @@
     <Component class="javax.swing.JButton" name="btnConsultar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Images/pesq.png"/>
+          <Image iconType="3" name="/fatec/poo/Icon/pesq.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Consultar"/>
       </Properties>
@@ -120,7 +120,7 @@
     <Component class="javax.swing.JButton" name="btnIncluir">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Images/add.png"/>
+          <Image iconType="3" name="/fatec/poo/Icon/add.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Incluir"/>
         <Property name="enabled" type="boolean" value="false"/>
@@ -129,7 +129,7 @@
     <Component class="javax.swing.JButton" name="btnAlterar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Images/Alterar.png"/>
+          <Image iconType="3" name="/fatec/poo/Icon/Alterar.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Alterar"/>
         <Property name="enabled" type="boolean" value="false"/>
@@ -138,7 +138,7 @@
     <Component class="javax.swing.JButton" name="btnExcluir">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Images/Eraser.png"/>
+          <Image iconType="3" name="/fatec/poo/Icon/Eraser.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Excluir"/>
         <Property name="enabled" type="boolean" value="false"/>
@@ -147,7 +147,7 @@
     <Component class="javax.swing.JButton" name="btnSair">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Images/exit.png"/>
+          <Image iconType="3" name="/fatec/poo/Icon/exit.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Sair"/>
       </Properties>
