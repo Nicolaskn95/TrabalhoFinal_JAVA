@@ -1,5 +1,6 @@
 package fatec.poo.control;
 
+import fatec.poo.model.Cliente;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Connection;
@@ -12,11 +13,11 @@ import java.sql.ResultSet;
 public class DaoCliente {
     private Connection conn;
     
-    public DaoDepartamento(Connection conn) {
+    public DaoCliente(Connection conn) {
          this.conn = conn;
     }
     
-    public void inserir(Departamento departamento) {
+    public void inserir(Cliente departamento) {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement("INSERT INTO tbdepartamento(Sigla_Dep, Nome_Dep) VALUES(?,?)");
@@ -29,7 +30,7 @@ public class DaoCliente {
         }
     }
     
-    public void alterar(Departamento departamento) {
+    public void alterar(Cliente departamento) {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement("UPDATE tbdepartamento set Nome_Dep = ? " +
@@ -44,19 +45,19 @@ public class DaoCliente {
         }
     }
         
-     public  Departamento consultar (String sigla) {
-        Departamento d = null;
+     public  Cliente consultar (String sigla) {
+        Cliente d = null;
        
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("SELECT * from tbDepartamento where " +
+            ps = conn.prepareStatement("SELECT * from tbCliente where " +
                                                  "Sigla_Dep = ?");
             
             ps.setString(1, sigla);
             ResultSet rs = ps.executeQuery();
            
             if (rs.next() == true) {
-                d = new Departamento (sigla, rs.getString("Nome_Dep"));
+                d = new Cliente (sigla, rs.getString("Nome_Cli"));
             }
         }
         catch (SQLException ex) { 
@@ -65,7 +66,7 @@ public class DaoCliente {
         return (d);
     }    
      
-     public void excluir(Departamento departamento) {
+     public void excluir(Cliente departamento) {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement("DELETE FROM tbdepartamento where Sigla_Dep = ?");
