@@ -1,6 +1,7 @@
 package fatec.poo.view;
 
 import fatec.poo.control.Conexao;
+import fatec.poo.control.DaoCliente;
 import fatec.poo.control.DaoProduto;
 import fatec.poo.model.Produto;
 import javax.swing.JOptionPane;
@@ -229,10 +230,10 @@ public class GuiProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        conexao = new Conexao("", "");
+        Conexao conexao = new Conexao("db_nicolas","admin"); //usuario e senha
         conexao.setDriver("oracle.jdbc.driver.OracleDriver");
-        conexao.setConnectionString("");
-        daoProduto = new DaoProduto(conexao.conectar());
+        conexao.setConnectionString("jdbc:oracle:thin:@127.0.0.1:1521:xe");
+        daoProduto = new DaoProduto (conexao.conectar());
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -265,6 +266,7 @@ public class GuiProduto extends javax.swing.JFrame {
             txtEstoque.setText("");
             txtQtdeDisponivel.setText("");
             txtPrecoUnit.setText("");
+            
             txtCodigo.setEnabled(true);
             txtDescricao.setEnabled(false);
             txtEstoque.setEnabled(false);

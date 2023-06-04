@@ -23,7 +23,7 @@ public class DaoCliente {
         try {
             ps = conn.prepareStatement("INSERT INTO TBCLIENTE(CPF, NOME, ENDERECO, CIDADE, CEP, UF, TELEFONE_DDD,"
                     + "TELEFONE_NUMERO, LIMITE_CREDITO, LIMITE_DISPONIVEL) VALUES(?,?,?,?,?,?,?,?,?,?)");
-            ps.setString(1, cliente.getCpf());
+            ps.setString(1, cliente.getCpf().replaceAll("[.-]", ""));
             ps.setString(2, cliente.getNome());
             ps.setString(3, cliente.getEndereco());
             ps.setString(4, cliente.getCidade());
