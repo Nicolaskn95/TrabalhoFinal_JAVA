@@ -38,6 +38,11 @@ public class GuiCliente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Cliente");
         setLocation(new java.awt.Point(600, 400));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("CPF");
 
@@ -231,6 +236,10 @@ public class GuiCliente extends javax.swing.JFrame {
     private void txtLimCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLimCreditoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLimCreditoActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+    }//GEN-LAST:event_formWindowOpened
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

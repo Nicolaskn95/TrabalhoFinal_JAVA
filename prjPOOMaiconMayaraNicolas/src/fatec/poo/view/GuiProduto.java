@@ -3,6 +3,7 @@ package fatec.poo.view;
 import fatec.poo.control.Conexao;
 import fatec.poo.control.DaoProduto;
 import fatec.poo.model.Produto;
+import javax.swing.JOptionPane;
 
 public class GuiProduto extends javax.swing.JFrame {
 
@@ -33,6 +34,14 @@ public class GuiProduto extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Produto");
         setLocation(new java.awt.Point(600, 400));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/Icon/pesq.png"))); // NOI18N
         btnConsultar.setText("Consultar");
@@ -45,14 +54,29 @@ public class GuiProduto extends javax.swing.JFrame {
         btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/Icon/add.png"))); // NOI18N
         btnIncluir.setText("Incluir");
         btnIncluir.setEnabled(false);
+        btnIncluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncluirActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/Icon/Alterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.setEnabled(false);
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/Icon/Eraser.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/Icon/exit.png"))); // NOI18N
         btnSair.setText("Sair");
@@ -158,31 +182,163 @@ public class GuiProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        try { 
+            Integer.parseInt(txtCodigo.getText());
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, "O código inserido não é válido. Digite apenas números");
+            txtCodigo.requestFocus();
+            txtCodigo.setText("");
+            System.out.println("FALHA AO CONVERTER CODIGO PARA INTEIRO");
+            return;
+        }
         produto = null;
-        produto = daoProduto.consultar(txtCodigo.getText());
-
-        if (produto == null) {// não encontrou o objeto na BD
-            txtSigla.setEnabled(false);
-            txtNome.setEnabled(true);
-            txtNome.requestFocus();
+//        produto = new Produto("123","Abcdefghijklmniopqrstuvwxyz");
+//        produto = daoProduto.consultar(txtCodigo.getText());
+        
+        
+        if (produto == null) {
+            txtCodigo.setEnabled(false);
+            txtDescricao.setEnabled(true);
+            txtDescricao.requestFocus();
+            txtQtdeDisponivel.setEnabled(true);
+            txtPrecoUnit.setEnabled(true);
+            txtEstoque.setEnabled(true);
 
             btnConsultar.setEnabled(false);
-            btnInserir.setEnabled(true);
+            btnIncluir.setEnabled(true);
             btnAlterar.setEnabled(false);
             btnExcluir.setEnabled(false);
-        } else { // encontrou o objeto na BD
-            txtNome.setText(departamento.getNome());
+        } else {
+            txtDescricao.setText(produto.getDescricao());
+            txtQtdeDisponivel.setText(Double.toString(produto.getQtdeEstoque()));
+            txtPrecoUnit.setText(Double.toString(produto.getPreco()));
+            txtEstoque.setText(Double.toString(produto.getEstoqueMinimo()));
 
-            txtSigla.setEnabled(false);
-            txtNome.setEnabled(true);
-            txtNome.requestFocus();
-
+            txtCodigo.setEnabled(false);
+            txtDescricao.setEnabled(true);
+            txtQtdeDisponivel.setEnabled(true);
+            txtPrecoUnit.setEnabled(true);
+            txtEstoque.setEnabled(true);
+            
             btnConsultar.setEnabled(false);
-            btnInserir.setEnabled(false);
+            btnIncluir.setEnabled(false);
             btnAlterar.setEnabled(true);
             btnExcluir.setEnabled(true);
+            
+            txtDescricao.requestFocus();
         }
     }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        conexao = new Conexao("", "");
+        conexao.setDriver("oracle.jdbc.driver.OracleDriver");
+        conexao.setConnectionString("");
+        daoProduto = new DaoProduto(conexao.conectar());
+    }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        conexao.fecharConexao();
+        dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        double estoque = 0;
+        double preco = 0;
+        double qtdEstoque = 0;
+         try { 
+            estoque = Double.parseDouble(txtEstoque.getText());
+            preco = Double.parseDouble(txtPrecoUnit.getText());
+            qtdEstoque = Double.parseDouble(txtQtdeDisponivel.getText());
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, "Estoque minimo, preço unitário ou quantidade disponívvel digitados não são válidos.\nDigite números e use . (ponto) para separar os decimais");
+            return;
+        }
+         
+        if (JOptionPane.showConfirmDialog(null, "Confirma Alteração?") == 0) {
+            produto.setDescricao(txtDescricao.getText());
+            produto.setEstoqueMinimo(estoque);
+            produto.setPreco(preco);
+            produto.setQtdeEstoque(qtdEstoque);
+//            daoProduto.alterar(produto);
+
+            txtCodigo.setText("");
+            txtDescricao.setText("");
+            txtEstoque.setText("");
+            txtQtdeDisponivel.setText("");
+            txtPrecoUnit.setText("");
+            txtCodigo.setEnabled(true);
+            txtDescricao.setEnabled(false);
+            txtEstoque.setEnabled(false);
+            txtQtdeDisponivel.setEnabled(false);
+            txtPrecoUnit.setEnabled(false);
+            txtCodigo.requestFocus();
+            btnConsultar.setEnabled(true);
+            btnIncluir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Confirma Exclusão?") == 0) {
+//            daoProduto.excluir(produto);
+            
+            txtCodigo.setText("");
+            txtDescricao.setText("");
+            txtEstoque.setText("");
+            txtQtdeDisponivel.setText("");
+            txtPrecoUnit.setText("");
+            txtCodigo.setEnabled(true);
+            txtDescricao.setEnabled(false);
+            txtEstoque.setEnabled(false);
+            txtQtdeDisponivel.setEnabled(false);
+            txtPrecoUnit.setEnabled(false);
+            txtCodigo.requestFocus();
+            btnConsultar.setEnabled(true);
+            btnIncluir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        double estoque = 0;
+        double preco = 0;
+        double qtdEstoque = 0;
+        
+        produto = new Produto(txtCodigo.getText(), txtDescricao.getText());
+        
+        try { 
+            estoque = Double.parseDouble(txtEstoque.getText());
+            preco = Double.parseDouble(txtPrecoUnit.getText());
+            qtdEstoque = Double.parseDouble(txtQtdeDisponivel.getText());
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, "Estoque minimo, preço unitário ou quantidade disponívvel digitados não são válidos.\nDigite números e use . (ponto) para separar os decimais");
+            return;
+        }
+        
+        produto.setEstoqueMinimo(estoque);
+        produto.setPreco(preco);
+        produto.setQtdeEstoque(qtdEstoque);
+//        daoProduto.inserir(produto);
+
+        
+        txtCodigo.setText("");
+        txtDescricao.setText("");
+        txtEstoque.setText("");
+        txtQtdeDisponivel.setText("");
+        txtPrecoUnit.setText("");
+        txtCodigo.setEnabled(true);
+        txtDescricao.setEnabled(false);
+        txtEstoque.setEnabled(false);
+        txtQtdeDisponivel.setEnabled(false);
+        txtPrecoUnit.setEnabled(false);
+        txtCodigo.requestFocus();
+        btnConsultar.setEnabled(true);
+        btnIncluir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+    }//GEN-LAST:event_btnIncluirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
