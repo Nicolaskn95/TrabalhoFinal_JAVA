@@ -192,8 +192,7 @@ public class GuiProduto extends javax.swing.JFrame {
             return;
         }
         produto = null;
-//        produto = new Produto("123","Abcdefghijklmniopqrstuvwxyz");
-//        produto = daoProduto.consultar(txtCodigo.getText());
+        produto = daoProduto.consultar(txtCodigo.getText());
         
         
         if (produto == null) {
@@ -259,7 +258,7 @@ public class GuiProduto extends javax.swing.JFrame {
             produto.setEstoqueMinimo(estoque);
             produto.setPreco(preco);
             produto.setQtdeEstoque(qtdEstoque);
-//            daoProduto.alterar(produto);
+            daoProduto.alterar(produto);
 
             txtCodigo.setText("");
             txtDescricao.setText("");
@@ -281,7 +280,7 @@ public class GuiProduto extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         if (JOptionPane.showConfirmDialog(null, "Confirma Exclusão?") == 0) {
-//            daoProduto.excluir(produto);
+            daoProduto.excluir(produto);
             
             txtCodigo.setText("");
             txtDescricao.setText("");
@@ -320,7 +319,7 @@ public class GuiProduto extends javax.swing.JFrame {
         produto.setEstoqueMinimo(estoque);
         produto.setPreco(preco);
         produto.setQtdeEstoque(qtdEstoque);
-//        daoProduto.inserir(produto);
+        daoProduto.inserir(produto);
 
         
         txtCodigo.setText("");
