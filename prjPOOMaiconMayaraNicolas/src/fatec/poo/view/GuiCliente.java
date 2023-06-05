@@ -260,10 +260,10 @@ public class GuiCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        conexao = new Conexao("db_nicolas","admin"); //usuario e senha
+        conexao = new Conexao("db_nicolas", "admin"); //usuario e senha
         conexao.setDriver("oracle.jdbc.driver.OracleDriver");
         conexao.setConnectionString("jdbc:oracle:thin:@127.0.0.1:1521:xe");
-        daoCliente = new DaoCliente (conexao.conectar());
+        daoCliente = new DaoCliente(conexao.conectar());
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -273,16 +273,16 @@ public class GuiCliente extends javax.swing.JFrame {
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         String cpf = txtCpf.getText();
-        if(!isCPF(cpf)) {
+        if (!isCPF(cpf)) {
             JOptionPane.showMessageDialog(this, "O cpf digitado não é válido");
             return;
         }
-        
+
         cliente = null;
-        
+
         cliente = daoCliente.consultar(cpf);
-        
-        if(cliente == null){
+
+        if (cliente == null) {
             txtNome.requestFocus();
             txtCpf.setEnabled(false);
             txtNome.setEnabled(true);
@@ -294,12 +294,12 @@ public class GuiCliente extends javax.swing.JFrame {
             txtCep.setEnabled(true);
             txtLimiteDisponivel.setEnabled(false);
             cbxUF.setEnabled(true);
-            
+
             txtNome.requestFocus();
-            
+
             btnIncluir.setEnabled(true);
-            btnConsultar.setEnabled(false);           
-        }else{
+            btnConsultar.setEnabled(false);
+        } else {
             txtCpf.setEnabled(false);
             txtNome.setText(cliente.getNome());
             txtEndereco.setText(cliente.getEndereco());
@@ -310,7 +310,7 @@ public class GuiCliente extends javax.swing.JFrame {
             txtLimCredito.setText(Double.toString(cliente.getLimiteCred()));
             txtLimiteDisponivel.setText(Double.toString(cliente.getLimiteDisp()));
             cbxUF.setSelectedItem(cliente.getUf());
-            
+
             //ativar os testi
             txtCpf.setEnabled(false);
             txtNome.setEnabled(true);
@@ -321,8 +321,8 @@ public class GuiCliente extends javax.swing.JFrame {
             txtTelefone.setEnabled(true);
             txtCep.setEnabled(true);
             txtLimCredito.setEnabled(true);
-            txtLimiteDisponivel.setEnabled(false);            
-            
+            txtLimiteDisponivel.setEnabled(false);
+
             //liberar botoes
             btnAlterar.setEnabled(true);
             btnExcluir.setEnabled(true);
@@ -331,19 +331,19 @@ public class GuiCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
-        
-        cliente = new Cliente(txtCpf.getText(),txtNome.getText(),Double.parseDouble(txtLimCredito.getText()));
-        
+
+        cliente = new Cliente(txtCpf.getText(), txtNome.getText(), Double.parseDouble(txtLimCredito.getText()));
+
         cliente.setEndereco(txtEndereco.getText());
         cliente.setCidade(txtCidade.getText());
         cliente.setTelefone(txtTelefone.getText());
         cliente.setDdd(txtDdd.getText());
         cliente.setCep(txtCep.getText());
         cliente.setUf(cbxUF.getSelectedItem().toString());
-        
+
         // criar objeto a partir do constuto
         daoCliente.inserir(cliente);
-        
+
         //apagar valores do testi
         txtCpf.setText("");
         txtNome.setText("");
@@ -355,7 +355,7 @@ public class GuiCliente extends javax.swing.JFrame {
         txtCep.setText("");
         txtLimCredito.setText("");
         txtLimiteDisponivel.setText("");
-        
+
         txtCpf.setEnabled(true);
         txtNome.setEnabled(false);
         txtEndereco.setEnabled(false);
@@ -365,17 +365,17 @@ public class GuiCliente extends javax.swing.JFrame {
         txtTelefone.setEnabled(false);
         txtCep.setEnabled(false);
         txtLimCredito.setEnabled(false);
-        txtLimiteDisponivel.setEnabled(false);        
-        
+        txtLimiteDisponivel.setEnabled(false);
+
         txtCpf.requestFocus();
-        
+
         //habilitar botoes
         btnConsultar.setEnabled(true);
         btnIncluir.setEnabled(false);
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        if (JOptionPane.showConfirmDialog(null, "Confirma Alteração?")== 0){    //Sim
+        if (JOptionPane.showConfirmDialog(null, "Confirma Alteração?") == 0) {    //Sim
             cliente.setCep(txtCep.getText());
             cliente.setCidade(txtCidade.getText());
             cliente.setDdd(txtDdd.getText());
@@ -384,47 +384,45 @@ public class GuiCliente extends javax.swing.JFrame {
             cliente.setLimiteCred(Double.parseDouble(txtLimCredito.getText()));
             cliente.setLimiteDisp(Double.parseDouble(txtLimiteDisponivel.getText()));
             //cliente.setUf(cbxUF.getSelectedItem());
-         
+
             daoCliente.alterar(cliente);
-        }    
-            
-         //apagar valores testi
-        txtCpf.setText("");
-        txtNome.setText("");
-        txtEndereco.setText("");
-        txtCidade.setText("");
-        cbxUF.setSelectedIndex(-1);
-        txtTelefone.setText("");
-        txtDdd.setText("");
-        txtCep.setText("");
-        txtLimCredito.setText("");
-        txtLimiteDisponivel.setText("");
-        
-        //habilitar campos testi 
-        txtCpf.setEnabled(true); 
-        txtNome.setEnabled(false); 
-        txtEndereco.setEnabled(false);
-        txtCidade.setEnabled(false);
-        cbxUF.setEnabled(false);
-        txtTelefone.setEnabled(false);
-        txtDdd.setEnabled(false);
-        txtCep.setEnabled(false);
-        txtLimCredito.setEnabled(false);
-        txtLimiteDisponivel.setEnabled(false);
-        
-        txtCpf.requestFocus();
-        
-        //habilitar botoes
-        btnConsultar.setEnabled(true);
-        btnIncluir.setEnabled(false);
-        btnAlterar.setEnabled(false);
-        btnExcluir.setEnabled(false);       
-        
-                  
+
+            //apagar valores testi
+            txtCpf.setText("");
+            txtNome.setText("");
+            txtEndereco.setText("");
+            txtCidade.setText("");
+            cbxUF.setSelectedIndex(-1);
+            txtTelefone.setText("");
+            txtDdd.setText("");
+            txtCep.setText("");
+            txtLimCredito.setText("");
+            txtLimiteDisponivel.setText("");
+
+            //habilitar campos testi 
+            txtCpf.setEnabled(true);
+            txtNome.setEnabled(false);
+            txtEndereco.setEnabled(false);
+            txtCidade.setEnabled(false);
+            cbxUF.setEnabled(false);
+            txtTelefone.setEnabled(false);
+            txtDdd.setEnabled(false);
+            txtCep.setEnabled(false);
+            txtLimCredito.setEnabled(false);
+            txtLimiteDisponivel.setEnabled(false);
+
+            txtCpf.requestFocus();
+
+            //habilitar botoes
+            btnConsultar.setEnabled(true);
+            btnIncluir.setEnabled(false);
+            btnAlterar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        if(JOptionPane.showConfirmDialog(null,"Confima Exclusão") == 0){
+        if (JOptionPane.showConfirmDialog(null, "Confima Exclusão") == 0) {
             daoCliente.excluir(cliente);
             //apagar valores label
             txtCpf.setText("");
@@ -437,7 +435,7 @@ public class GuiCliente extends javax.swing.JFrame {
             txtCep.setText("");
             txtLimCredito.setText("");
             txtLimiteDisponivel.setText("");
-           
+
             //habilitar campos testi
             txtCpf.setEnabled(true);
             txtNome.setEnabled(true);
@@ -449,9 +447,9 @@ public class GuiCliente extends javax.swing.JFrame {
             txtCep.setEnabled(false);
             txtLimCredito.setEnabled(false);
             txtLimiteDisponivel.setEnabled(false);
-            
+
             txtCpf.requestFocus();
-            
+
             //habilitar botoes
             btnConsultar.setEnabled(true);
             btnIncluir.setEnabled(false);
@@ -460,7 +458,6 @@ public class GuiCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    
     static boolean isCPF(String CPF) {
         CPF = CPF.replaceAll("[-.]", "");
         if (CPF.equals("00000000000")
@@ -545,5 +542,5 @@ public class GuiCliente extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private Conexao conexao = null;
     private DaoCliente daoCliente = null;
-    private Cliente cliente  = null;
+    private Cliente cliente = null;
 }
