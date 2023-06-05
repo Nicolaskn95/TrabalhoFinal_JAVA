@@ -19,7 +19,7 @@ public class DaoVendedor {
         try {
             ps = conn.prepareStatement("INSERT INTO TBVENDEDOR(CPF, NOME, ENDERECO, CIDADE, CEP, UF, TELEFONE_DDD,"
                     + "TELEFONE_NUMERO, SALARIO_BASE, COMISSAO) VALUES(?,?,?,?,?,?,?,?,?,?)");
-            ps.setString(1, vendedor.getCpf());
+            ps.setString(1, vendedor.getCpf().replaceAll("[.-]", ""));
             ps.setString(2, vendedor.getNome());
             ps.setString(3, vendedor.getEndereco());
             ps.setString(4, vendedor.getCidade());

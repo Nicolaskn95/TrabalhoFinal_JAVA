@@ -71,5 +71,19 @@ public class Pessoa {
     public String getTelefone() {
         return telefone;
     }
+    
+    public static double validarCPF(String cpf){
+        int cont = 0;;
+        double result = 0;
+        int semDigVerificador = 2;
+        
+        int[] arrayCpf = new int[cpf.length()];
+        //int result = 0;
+        for(cont = 0; cont < cpf.length()-semDigVerificador; cont++){
+          // result = (cpf[cont] * [cont]);
+            
+        }
+        return 0;
+    }    
 
 }

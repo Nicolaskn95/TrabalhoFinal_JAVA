@@ -229,14 +229,14 @@ public class GuiCliente extends javax.swing.JFrame {
                     .addComponent(lblUf)
                     .addComponent(cbxUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblCep)
                         .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblTelefone)
-                        .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(21, 21, 21)
+                        .addComponent(lblTelefone))
+                    .addComponent(txtTelefone)
+                    .addComponent(txtDdd))
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLimiteDisponivel)
                     .addComponent(txtLimiteDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,8 +251,6 @@ public class GuiCliente extends javax.swing.JFrame {
                     .addComponent(btnConsultar))
                 .addGap(57, 57, 57))
         );
-
-        cbxUF.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -398,7 +396,6 @@ public class GuiCliente extends javax.swing.JFrame {
         txtCep.setText("");
         txtLimCredito.setText("");
         txtLimiteDisponivel.setText("");
-        txtLimiteDisponivel.setText("");
         
         //habilitar campos testi 
         txtCpf.setEnabled(true); 
@@ -410,7 +407,6 @@ public class GuiCliente extends javax.swing.JFrame {
         txtDdd.setEnabled(false);
         txtCep.setEnabled(false);
         txtLimCredito.setEnabled(false);
-        txtLimiteDisponivel.setEnabled(false);
         txtLimiteDisponivel.setEnabled(false);
         
         txtCpf.requestFocus();
@@ -449,7 +445,6 @@ public class GuiCliente extends javax.swing.JFrame {
             txtDdd.setEnabled(false);
             txtCep.setEnabled(false);
             txtLimCredito.setEnabled(false);
-            txtLimiteDisponivel.setEnabled(false);
             txtLimiteDisponivel.setEnabled(false);
             
             txtCpf.requestFocus();
