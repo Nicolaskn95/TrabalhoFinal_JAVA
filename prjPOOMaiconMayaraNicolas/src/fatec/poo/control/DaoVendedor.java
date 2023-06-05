@@ -77,7 +77,7 @@ public class DaoVendedor {
                 seller.setDdd(rs.getString("TELEFONE_DDD"));
                 seller.setTelefone(rs.getString("TELEFONE_NUMERO"));
                 seller.setEndereco(rs.getString("ENDERECO"));
-                seller.setTaxaComissao(rs.getDouble("COMISSAO"));
+                seller.setTaxaComissao(rs.getDouble("COMISSAO") * 100);
                 seller.setUf(rs.getString("UF"));
             }
         } catch (SQLException ex) {
