@@ -257,7 +257,7 @@ public class GuiVendedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        conexao = new Conexao("db_nicolas","admin");//usuario e senha
+        conexao = new Conexao("db_nicolas", "admin");//usuario e senha
         conexao.setDriver("oracle.jdbc.driver.OracleDriver");
         conexao.setConnectionString("jdbc:oracle:thin:@127.0.0.1:1521:xe");
         daoVendedor = new DaoVendedor(conexao.conectar());
@@ -267,43 +267,45 @@ public class GuiVendedor extends javax.swing.JFrame {
         dispose();
         conexao.fecharConexao();
     }//GEN-LAST:event_formWindowClosing
-        
-    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-       String cpf = txtCpf.getText();
-       cpf = cpf.replaceAll("[-.]", "");
-       
-       vendedor = null;
-   
-       vendedor = daoVendedor.consultar(cpf);
-       
-       if(vendedor == null){
-           txtCpf.setEnabled(false);
-           txtNome.setEnabled(true);
-           txtEndereco.setEnabled(true);
-           txtCidade.setEnabled(true);
-           cbxUF.setEnabled(true);
-           txtCep.setEnabled(true);
-           txtDdd.setEnabled(true);
-           txtTelefone.setEnabled(true);
-           txtTxComissao.setEnabled(true);
-           txtSalBase.setEnabled(true);
-           
-           txtNome.requestFocus();
 
-           btnConsultar.setEnabled(false);
-           btnIncluir.setEnabled(true);
-       } else{
-           txtCpf.setEnabled(false);
-           txtNome.setText(vendedor.getNome());
-           txtEndereco.setText(vendedor.getEndereco());
-           txtCidade.setText(vendedor.getCidade());
-           cbxUF.setSelectedItem(vendedor.getUf());
-           txtCep.setText(vendedor.getCep());
-           txtTelefone.setText(vendedor.getTelefone());
-           txtDdd.setText(vendedor.getDdd());
-           txtSalBase.setText(Double.toString(vendedor.getSalarioBase()));
-           txtTxComissao.setText(Double.toString(vendedor.getTaxaComissao()));
-           
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        String cpf = txtCpf.getText();
+        if(!isCPF(cpf)) {
+            JOptionPane.showMessageDialog(this, "O cpf digitado não é válido");
+            return;
+        }
+
+        vendedor = null;
+//        vendedor = daoVendedor.consultar(cpf);
+
+        if (vendedor == null) {
+            txtCpf.setEnabled(false);
+            txtNome.setEnabled(true);
+            txtEndereco.setEnabled(true);
+            txtCidade.setEnabled(true);
+            cbxUF.setEnabled(true);
+            txtCep.setEnabled(true);
+            txtDdd.setEnabled(true);
+            txtTelefone.setEnabled(true);
+            txtTxComissao.setEnabled(true);
+            txtSalBase.setEnabled(true);
+
+            txtNome.requestFocus();
+
+            btnConsultar.setEnabled(false);
+            btnIncluir.setEnabled(true);
+        } else {
+            txtCpf.setEnabled(false);
+            txtNome.setText(vendedor.getNome());
+            txtEndereco.setText(vendedor.getEndereco());
+            txtCidade.setText(vendedor.getCidade());
+            cbxUF.setSelectedItem(vendedor.getUf());
+            txtCep.setText(vendedor.getCep());
+            txtTelefone.setText(vendedor.getTelefone());
+            txtDdd.setText(vendedor.getDdd());
+            txtSalBase.setText(Double.toString(vendedor.getSalarioBase()));
+            txtTxComissao.setText(Double.toString(vendedor.getTaxaComissao()));
+
             //ativar os testi
             txtCpf.setEnabled(false);
             txtNome.setEnabled(true);
@@ -315,24 +317,24 @@ public class GuiVendedor extends javax.swing.JFrame {
             txtCep.setEnabled(true);
             txtSalBase.setEnabled(true);
             txtTxComissao.setEnabled(true);
-            
+
             btnConsultar.setEnabled(false);
             btnIncluir.setEnabled(false);
             btnAlterar.setEnabled(true);
             btnExcluir.setEnabled(true);
-            
+
             txtNome.requestFocus();
-            
-           btnConsultar.setEnabled(false);
-           btnIncluir.setEnabled(false);
-           btnAlterar.setEnabled(true);
-           btnExcluir.setEnabled(true);            
-       }
+
+            btnConsultar.setEnabled(false);
+            btnIncluir.setEnabled(false);
+            btnAlterar.setEnabled(true);
+            btnExcluir.setEnabled(true);
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
-        vendedor = new Vendedor(txtCpf.getText(),txtNome.getText(),Double.parseDouble(txtSalBase.getText()));
-        
+        vendedor = new Vendedor(txtCpf.getText(), txtNome.getText(), Double.parseDouble(txtSalBase.getText()));
+
         vendedor.setCep(txtCep.getText());
         vendedor.setCidade(txtCidade.getText());
         vendedor.setDdd(txtDdd.getText());
@@ -340,9 +342,9 @@ public class GuiVendedor extends javax.swing.JFrame {
         vendedor.setTelefone(txtTelefone.getText());
         vendedor.setUf(cbxUF.getSelectedItem().toString());
         vendedor.setTaxaComissao(Double.parseDouble(txtTxComissao.getText()));
-        
+        System.out.println(vendedor.getTaxaComissao());
         daoVendedor.inserir(vendedor);
-        
+
         //apagar valores do testi
         txtCpf.setText("");
         txtNome.setText("");
@@ -366,11 +368,11 @@ public class GuiVendedor extends javax.swing.JFrame {
         txtTelefone.setEnabled(false);
         txtCep.setEnabled(false);
         txtSalBase.setEnabled(false);
-        txtTxComissao.setEnabled(false); 
-        
+        txtTxComissao.setEnabled(false);
+
         //habilitar botoes
         btnConsultar.setEnabled(true);
-        btnIncluir.setEnabled(false);        
+        btnIncluir.setEnabled(false);
     }//GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
@@ -385,8 +387,8 @@ public class GuiVendedor extends javax.swing.JFrame {
 
             daoVendedor.alterar(vendedor);
         }
-        
-         //apagar valores testi
+
+        //apagar valores testi
         txtCpf.setText("");
         txtNome.setText("");
         txtEndereco.setText("");
@@ -396,8 +398,8 @@ public class GuiVendedor extends javax.swing.JFrame {
         txtDdd.setText("");
         txtCep.setText("");
         txtSalBase.setText("");
-        txtTxComissao.setText("");      
-        
+        txtTxComissao.setText("");
+
         txtCpf.setEnabled(true);
         txtNome.setEnabled(false);
         txtEndereco.setEnabled(false);
@@ -408,9 +410,9 @@ public class GuiVendedor extends javax.swing.JFrame {
         txtCep.setEnabled(false);
         txtSalBase.setEnabled(false);
         txtTxComissao.setEnabled(false);
-        
+
         txtCpf.requestFocus();
-        
+
         btnConsultar.setEnabled(true);
         btnExcluir.setEnabled(false);
         btnAlterar.setEnabled(false);
@@ -418,7 +420,7 @@ public class GuiVendedor extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        if(JOptionPane.showConfirmDialog(null,"Confima Exclusão") == 0){
+        if (JOptionPane.showConfirmDialog(null, "Confima Exclusão") == 0) {
             daoVendedor.excluir(vendedor);
             //apagar valores label
             txtCpf.setText("");
@@ -431,7 +433,7 @@ public class GuiVendedor extends javax.swing.JFrame {
             txtCep.setText("");
             txtSalBase.setText("");
             txtTxComissao.setText("");
-           
+
             //habilitar campos testi
             txtCpf.setEnabled(true);
             txtNome.setEnabled(true);
@@ -443,9 +445,9 @@ public class GuiVendedor extends javax.swing.JFrame {
             txtCep.setEnabled(false);
             txtSalBase.setEnabled(false);
             txtTxComissao.setEnabled(false);
-            
+
             txtCpf.requestFocus();
-            
+
             //habilitar botoes
             btnConsultar.setEnabled(true);
             btnIncluir.setEnabled(false);
@@ -454,7 +456,61 @@ public class GuiVendedor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    static boolean isCPF(String CPF) {
+        CPF = CPF.replaceAll("[-.]", "");
+        if (CPF.equals("00000000000")
+                || CPF.equals("11111111111")
+                || CPF.equals("22222222222") || CPF.equals("33333333333")
+                || CPF.equals("44444444444") || CPF.equals("55555555555")
+                || CPF.equals("66666666666") || CPF.equals("77777777777")
+                || CPF.equals("88888888888") || CPF.equals("99999999999")
+                || (CPF.length() != 11)) {
+            return (false);
+        }
 
+        char dig10, dig11;
+        int sm, i, r, num, peso;
+
+        try {
+            sm = 0;
+            peso = 10;
+            for (i = 0; i < 9; i++) {
+                num = (int) (CPF.charAt(i) - 48);
+                sm = sm + (num * peso);
+                peso = peso - 1;
+            }
+
+            r = 11 - (sm % 11);
+            if ((r == 10) || (r == 11)) {
+                dig10 = '0';
+            } else {
+                dig10 = (char) (r + 48);
+            }
+
+            sm = 0;
+            peso = 11;
+            for (i = 0; i < 10; i++) {
+                num = (int) (CPF.charAt(i) - 48);
+                sm = sm + (num * peso);
+                peso = peso - 1;
+            }
+
+            r = 11 - (sm % 11);
+            if ((r == 10) || (r == 11)) {
+                dig11 = '0';
+            } else {
+                dig11 = (char) (r + 48);
+            }
+
+            if ((dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10))) {
+                return (true);
+            } else {
+                return (false);
+            }
+        } catch (Exception erro) {
+            return (false);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnConsultar;

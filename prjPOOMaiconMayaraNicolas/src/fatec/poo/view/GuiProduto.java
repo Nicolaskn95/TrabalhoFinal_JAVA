@@ -230,7 +230,7 @@ public class GuiProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        Conexao conexao = new Conexao("db_nicolas","admin"); //usuario e senha
+        conexao = new Conexao("db_nicolas","admin"); //usuario e senha
         conexao.setDriver("oracle.jdbc.driver.OracleDriver");
         conexao.setConnectionString("jdbc:oracle:thin:@127.0.0.1:1521:xe");
         daoProduto = new DaoProduto (conexao.conectar());
