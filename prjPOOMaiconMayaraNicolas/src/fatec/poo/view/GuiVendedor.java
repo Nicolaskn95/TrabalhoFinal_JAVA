@@ -270,6 +270,8 @@ public class GuiVendedor extends javax.swing.JFrame {
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         String cpf = txtCpf.getText();
+        cpf = cpf.replaceAll("[-.]", "");
+        
         if (!isCPF(cpf)) {
             JOptionPane.showMessageDialog(this, "O cpf digitado não é válido");
             return;
@@ -384,7 +386,7 @@ public class GuiVendedor extends javax.swing.JFrame {
             vendedor.setTelefone(txtTelefone.getText());
             vendedor.setSalarioBase(Double.parseDouble(txtSalBase.getText()));
             vendedor.setTaxaComissao(Double.parseDouble(txtTxComissao.getText()));
-
+            
             daoVendedor.alterar(vendedor);
 
             //apagar valores testi
