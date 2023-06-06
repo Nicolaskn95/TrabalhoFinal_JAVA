@@ -273,6 +273,7 @@ public class GuiCliente extends javax.swing.JFrame {
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         String cpf = txtCpf.getText();
+        cpf = cpf.replaceAll("[-.]", "");
         if (!isCPF(cpf)) {
             JOptionPane.showMessageDialog(this, "O cpf digitado não é válido");
             return;
@@ -281,7 +282,7 @@ public class GuiCliente extends javax.swing.JFrame {
         cliente = null;
 
         cliente = daoCliente.consultar(cpf);
-
+        System.out.print(cpf);
         if (cliente == null) {
             txtNome.requestFocus();
             txtCpf.setEnabled(false);
@@ -322,6 +323,8 @@ public class GuiCliente extends javax.swing.JFrame {
             txtCep.setEnabled(true);
             txtLimCredito.setEnabled(true);
             txtLimiteDisponivel.setEnabled(false);
+            
+            txtNome.requestFocus();
 
             //liberar botoes
             btnAlterar.setEnabled(true);
@@ -376,6 +379,7 @@ public class GuiCliente extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         if (JOptionPane.showConfirmDialog(null, "Confirma Alteração?") == 0) {    //Sim
+            super.setName(txtNome.getText());
             cliente.setCep(txtCep.getText());
             cliente.setCidade(txtCidade.getText());
             cliente.setDdd(txtDdd.getText());
