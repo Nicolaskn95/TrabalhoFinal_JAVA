@@ -72,6 +72,10 @@ public class Pessoa {
         return telefone;
     }
     
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+    
     public static double validarCPF(String cpf){
         int cont = 0;;
         double result = 0;

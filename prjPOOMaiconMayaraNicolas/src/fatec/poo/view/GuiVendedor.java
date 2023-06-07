@@ -384,6 +384,7 @@ public class GuiVendedor extends javax.swing.JFrame {
             vendedor.setDdd(txtDdd.getText());
             vendedor.setEndereco(txtEndereco.getText());
             vendedor.setTelefone(txtTelefone.getText());
+            vendedor.setNome(txtNome.getText());
             vendedor.setSalarioBase(Double.parseDouble(txtSalBase.getText()));
             vendedor.setTaxaComissao(Double.parseDouble(txtTxComissao.getText()));
             

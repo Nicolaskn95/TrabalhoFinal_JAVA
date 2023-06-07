@@ -385,6 +385,7 @@ public class GuiCliente extends javax.swing.JFrame {
             cliente.setDdd(txtDdd.getText());
             cliente.setEndereco(txtEndereco.getText());
             cliente.setTelefone(txtTelefone.getText());
+            cliente.setNome(txtNome.getText());
             cliente.setLimiteCred(Double.parseDouble(txtLimCredito.getText()));
             cliente.setLimiteDisp(Double.parseDouble(txtLimiteDisponivel.getText()));
             //cliente.setUf(cbxUF.getSelectedItem());
