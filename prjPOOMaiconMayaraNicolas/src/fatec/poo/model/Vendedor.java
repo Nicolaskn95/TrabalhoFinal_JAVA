@@ -17,7 +17,7 @@ public class Vendedor extends Pessoa{
     public void setSalarioBase(double salarioBase) {
         this.salarioBase = salarioBase;
     }
-
+                                            
     public void setTaxaComissao(double taxaComissao) {
         this.taxaComissao = (taxaComissao/100);
     }
@@ -27,7 +27,7 @@ public class Vendedor extends Pessoa{
     }
 
     public double getTaxaComissao() {
-        return taxaComissao;
+        return taxaComissao * 100;
     }
 
     public void addPedido(Pedido pedido) {
