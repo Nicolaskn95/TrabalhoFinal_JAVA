@@ -11,5 +11,5 @@
 # Sprints
 - [X] Primeira Entrega - 18/05/23
 - [X] Segunda Entrega - 25/05/23
-- [ ] Terceira Entrega - 05/06/23
-- [ ] Quarta Entrega
+- [X] Terceira Entrega - 05/06/23
+- [ ] Quarta Entrega - 20/06/23
