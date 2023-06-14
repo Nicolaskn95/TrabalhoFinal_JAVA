@@ -31,11 +31,11 @@ public class Pedido {
         return dataPagto;
     }
 
-    public boolean setFormaPagto() {
+    public boolean getFormaPagto() {
         return formaPagto;
     }
 
-    public boolean setSituacao() {
+    public boolean getSituacao() {
         return situacao;
     }
 

@@ -5,8 +5,9 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
-import fatec.poo.model.Cliente;
 import fatec.poo.model.ItemPedido;
+import fatec.poo.model.Pedido;
+import fatec.poo.model.Produto;
 
 /**
  *
@@ -22,19 +23,13 @@ public class DaoItemPedido {
     public void inserir(ItemPedido itemPedido) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("INSERT INTO TBCLIENTE(CPF, NOME, ENDERECO, CIDADE, CEP, UF, TELEFONE_DDD,"
-                    + "TELEFONE_NUMERO, LIMITE_CREDITO, LIMITE_DISPONIVEL) VALUES(?,?,?,?,?,?,?,?,?,?)");
-            ps.setString(1, cliente.getCpf().replaceAll("[.-]", ""));
-            ps.setString(2, cliente.getNome());
-            ps.setString(3, cliente.getEndereco());
-            ps.setString(4, cliente.getCidade());
-            ps.setString(5, cliente.getCep());
-            ps.setString(6, cliente.getUf());
-            ps.setString(7, cliente.getDdd());
-            ps.setString(8, cliente.getTelefone());
-            ps.setDouble(9, cliente.getLimiteCred());
-            ps.setDouble(10, cliente.getLimiteDisp());
-
+            ps = conn.prepareStatement("INSERT INTO TBITEMPEDIDO(SEQUENCIA, QTDE_VENDIDA, PRODUTO_ID, PEDIDO_ID) "
+                                     + "VALUES(?,?,?,?)");
+            ps.setInt(1, itemPedido.getSequencia());
+            ps.setDouble(2, itemPedido.getQtdeVendida());
+            ps.setString(3, itemPedido.getProduto().getCodigo());
+            ps.setString(4, itemPedido.getPedido().getNumero());
+            
             ps.execute();
         } catch (SQLException ex) {
             System.out.println(ex.toString());
@@ -45,59 +40,48 @@ public class DaoItemPedido {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(
-                    "UPDATE TBCLIENTE SET NOME = ?, ENDERECO = ?, CIDADE = ?, CEP = ?, UF = ?, TELEFONE_DDD = ?,"
-                            + "TELEFONE_NUMERO = ?, LIMITE_CREDITO = ?, LIMITE_DISPONIVEL = ? " +
-                            "WHERE CPF = ?");
+                    "UPDATE TBITEMPEDIDO SET QTDE_VENDIDA = ?, PRODUTO_ID = ?, PEDIDO_ID = ?" +
+                            "WHERE SEQUENCIA = ?");
 
-            ps.setString(1, cliente.getNome());
-            ps.setString(2, cliente.getEndereco());
-            ps.setString(3, cliente.getCidade());
-            ps.setString(4, cliente.getCep());
-            ps.setString(5, cliente.getUf());
-            ps.setString(6, cliente.getDdd());
-            ps.setString(7, cliente.getTelefone());
-            ps.setDouble(8, cliente.getLimiteCred());
-            ps.setDouble(9, cliente.getLimiteDisp());
-            ps.setString(10, cliente.getCpf());
-
+            ps.setDouble(1, itemPedido.getQtdeVendida());
+            ps.setString(2, itemPedido.getProduto().getCodigo());
+            ps.setString(3, itemPedido.getPedido().getNumero());
+            ps.setInt(4, itemPedido.getSequencia());
+            
             ps.execute();
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
     }
-
-    public Cliente consultar(String cpf) {
-        Cliente newClient = null;
+    
+    public ItemPedido consultar(int sequencia) {
+        ItemPedido newItem = null;
 
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("SELECT * FROM TBCLIENTE WHERE CPF = ?");
+            ps = conn.prepareStatement("SELECT * FROM TBITEMPEDIDO WHERE SEQUENCIA = ?");
 
-            ps.setString(1, cpf);
+            ps.setInt(1, sequencia);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next() == true) {
-                newClient = new Cliente(cpf, rs.getString("NOME"), rs.getDouble("LIMITE_CREDITO"));
-                newClient.setCep(rs.getString("CEP"));
-                newClient.setCidade(rs.getString("CIDADE"));
-                newClient.setDdd(rs.getString("TELEFONE_DDD"));
-                newClient.setTelefone(rs.getString("TELEFONE_NUMERO"));
-                newClient.setEndereco(rs.getString("ENDERECO"));
-                newClient.setLimiteDisp(rs.getDouble("LIMITE_DISPONIVEL"));
-                newClient.setUf(rs.getString("UF"));
+                Produto produto = new DaoProduto(conn).consultar(rs.getString("PRODUTO_ID"));
+                newItem = new ItemPedido(sequencia, rs.getDouble("QTDE_VENDIDA"), produto);
+                Pedido pedido =  new DaoPedido(conn).consultar(rs.getString("PEDIDO_ID"));
+                pedido.addItemPedido(newItem);
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-        return (newClient);
+        return (newItem);
     }
 
     public void excluir(ItemPedido itemPedido) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("DELETE FROM TBCLIENTE WHERE CPF = ?");
+            ps = conn.prepareStatement("DELETE FROM TBITEMPEDIDO WHERE SEQUENCIA = ?");
 
-            ps.setString(1, cliente.getCpf());
+            ps.setInt(1, itemPedido.getSequencia());
 
             ps.execute();
         } catch (SQLException ex) {
