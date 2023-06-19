@@ -8,7 +8,6 @@ public class Produto {
     private String unidadeMedida;
     private double preco;
     private double estoqueMinimo;
-    private ItemPedido itemPedido;
 
     public Produto(String codigo, String descricao) {
         this.codigo = codigo;

@@ -31,11 +31,11 @@ public class Pedido {
         return dataPagto;
     }
 
-    public boolean setFormaPagto() {
+    public boolean getFormaPagto() {
         return formaPagto;
     }
 
-    public boolean setSituacao() {
+    public boolean getSituacao() {
         return situacao;
     }
 
@@ -54,11 +54,19 @@ public class Pedido {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+    
+    public Cliente getCliente() {
+        return cliente;
+    }
 
     public void setVendedor(Vendedor vendedor) {
         this.vendedor = vendedor;
     }
 
+    public Vendedor getVendedor() {
+        return vendedor;
+    }
+    
     public void addItemPedido(ItemPedido itemPedido) {
         itemPedido.setPedido(this);
         itensPedido.add(itemPedido);

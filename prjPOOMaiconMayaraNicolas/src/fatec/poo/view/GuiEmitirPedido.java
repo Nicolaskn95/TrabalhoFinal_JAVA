@@ -5,6 +5,17 @@
  */
 package fatec.poo.view;
 
+import fatec.poo.control.Conexao;
+import fatec.poo.control.DaoCliente;
+import fatec.poo.control.DaoItemPedido;
+import fatec.poo.control.DaoPedido;
+import fatec.poo.control.DaoProduto;
+import fatec.poo.control.DaoVendedor;
+import fatec.poo.model.Cliente;
+import fatec.poo.model.ItemPedido;
+import fatec.poo.model.Pedido;
+import fatec.poo.model.Vendedor;
+
 /**
  *
  * @author Lenovo
@@ -122,17 +133,17 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
         btnConsultarPed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/Icon/pesq.png"))); // NOI18N
         btnConsultarPed.setMaximumSize(new java.awt.Dimension(49, 20));
         btnConsultarPed.setMinimumSize(new java.awt.Dimension(49, 20));
+        btnConsultarPed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarPedActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Data do Pedido");
 
         txtfDtPedido.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         txtfDtPedido.setEnabled(false);
-        txtfDtPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtfDtPedidoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -388,17 +399,17 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel5)
-                                .addComponent(txtCodProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblProduto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(txtQtdItensPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnConsultarPed3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblProduto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(txtQtdItensPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnConsultarPed3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddItem)
@@ -461,6 +472,58 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIncluirActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddItemActionPerformed
+
+    private void btnRemoverItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRemoverItemActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        conexao = new Conexao("db_nicolas","admin"); //usuario e senha
+        conexao.setDriver("oracle.jdbc.driver.OracleDriver");
+        conexao.setConnectionString("jdbc:oracle:thin:@127.0.0.1:1521:xe");
+        daoItemPedido = new DaoItemPedido (conexao.conectar());
+        daoPedido = new DaoPedido (conexao.conectar());
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnConsultarPedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPedActionPerformed
+        pedido = null;
+        pedido = daoPedido.consultar(txtNumPedido.getText());
+        if(pedido == null) {
+            
+        } else {
+            txtfDtPedido.setText(pedido.getDataEmissao());
+            txtfCPFCli.setText(pedido.getCliente().getCpf());
+            txtfCPFVend.setText(pedido.getVendedor().getCpf());
+            lblVendedor.setText(pedido.getVendedor().getNome());
+            lblCliente.setText(pedido.getCliente().getNome());
+            
+            btnConsultarPed.setEnabled(false);
+            txtCodProduto.setEnabled(true);
+            btnAlterar.setEnabled(true);
+            btnExcluir.setEnabled(true);
+            btnRemoverItem.setEnabled(true);
+        }
+        
+    }//GEN-LAST:event_btnConsultarPedActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddItem;
@@ -499,4 +562,12 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtfCPFVend;
     private javax.swing.JFormattedTextField txtfDtPedido;
     // End of variables declaration//GEN-END:variables
+    private DaoProduto daoProduto = null;
+    private DaoPedido daoPedido = null;
+    private DaoVendedor daoVendedor = null;
+    private DaoCliente daoCliente = null;
+    private DaoItemPedido daoItemPedido = null;
+    private ItemPedido itemPedido = null;
+    private Pedido pedido = null;=
+    private Conexao conexao = null;
 }
