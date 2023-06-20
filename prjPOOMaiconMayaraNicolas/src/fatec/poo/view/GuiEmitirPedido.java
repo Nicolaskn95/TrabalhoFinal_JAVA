@@ -884,10 +884,11 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 
 	private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnIncluirActionPerformed
 		System.out.println("==== PEDIDO ====");
+		pedido.setFormaPagto(rbtnAVista.isSelected());
+        
 		System.out.println(pedido.getNumero());
 		System.out.println(pedido.getDataEmissao());
 		System.out.println(pedido.getDataPagto());
-		System.out.println(pedido.getFormaPagto());
 		System.out.println(pedido.getSituacao());
 		System.out.println(pedido.getCliente().getCpf());
 		System.out.println(pedido.getVendedor().getCpf());
@@ -900,6 +901,42 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 			System.out.println(elementoItemPedido.getPedido().getNumero());
 			// daoItemPedido.inserir(elementoItemPedido);
 		}
+
+        txtNumPedido.setText("");
+        txtNumPedido.requestFocus();
+        txtNumPedido.setEnabled(true);
+        btnConsultarPed.setEnabled(true);
+
+        txtfDtPedido.setText("");
+        txtfDtPedido.setEnabled(false);    
+
+        txtfCPFCli.setText("");
+        txtfCPFCli.setEnabled(false);
+        lblCliente.setText("");
+
+        txtfCPFVend.setText("");
+        txtfCPFVend.setEnabled(false);
+        lblVendedor.setText("");
+
+        txtCodProduto.setText("");
+        txtCodProduto.setEnabled(false);
+        lblProduto.setText("");
+
+        txtQtdItensPedido.setText("");
+        txtQtdItensPedido.setEnabled(false);
+        lblValTotPedido.setText("");
+        lblQtdItensPedido.setText("");
+
+        rbtnAPrazo.setEnabled(false);
+        rbtnAVista.setEnabled(false);
+        rbtnAVista.setSelected(true);
+
+        itensPedido.clear();
+        pedido = null;
+        cliente = null;
+        vendedor = null;
+        produto = null;
+        atualizarListaDeProdutos();
 	}// GEN-LAST:event_btnIncluirActionPerformed
 
 	private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnSairActionPerformed
