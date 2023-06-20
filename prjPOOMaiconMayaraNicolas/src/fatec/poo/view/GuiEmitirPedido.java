@@ -838,7 +838,8 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 
 			Double subTotal = numQtdVendida * produto.getPreco();
 			String valorAtualText = "0.0";
-			if (!(lblValTotPedido.getText().isEmpty() || lblValTotPedido.getText() == " " || lblValTotPedido.getText() == "")) {
+			if (!(lblValTotPedido.getText().isEmpty() || lblValTotPedido.getText() == " "
+					|| lblValTotPedido.getText() == "")) {
 				valorAtualText = lblValTotPedido.getText();
 			}
 
