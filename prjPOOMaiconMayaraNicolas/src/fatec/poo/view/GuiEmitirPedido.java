@@ -678,12 +678,6 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
             txtNumPedido.requestFocus();
             return;
         }
-
-        if (!validarData(txtfDtPedido.getText())) {
-            JOptionPane.showMessageDialog(this, "Data inválida!", "Pedido", JOptionPane.WARNING_MESSAGE);
-            txtfDtPedido.requestFocus();
-            return;
-        }
         pedido = null;
         // pedido = daoPedido.consultar(txtNumPedido.getText());
 
@@ -753,6 +747,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
     private void btnConsultarVenActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnConsultarVenActionPerformed
         vendedor = null;
         String cpfCVendedor = txtfCPFVend.getText().replaceAll("[.-]", "");
+
         if (!Pessoa.validarCPF(cpfCVendedor)) {
             JOptionPane.showMessageDialog(this, "CPF invalido inválido!", "Vendedor", JOptionPane.WARNING_MESSAGE);
             txtfCPFVend.requestFocus();
@@ -766,7 +761,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
             txtfCPFVend.requestFocus();
             txtfCPFVend.setText("");
         } else {
-
+            lblVendedor.setText(vendedor.getNome());
             txtfCPFVend.setEnabled(false);
             btnConsultarVen.setEnabled(false);
             txtCodProduto.setEnabled(true);
@@ -786,6 +781,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
         }
         produto = null;
         // produto = daoProduto.consultar(codProduto);
+        System.out.println(codProduto);
         if (codProduto == "1") {
             produto = new Produto(codProduto, "produto x");
             produto.setPreco(100);
@@ -806,7 +802,6 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
             btnAddItem.setEnabled(false);
             btnRemoverItem.setEnabled(false);
             txtQtdItensPedido.setEnabled(false);
-            return;
         } else {
             lblProduto.setText(produto.getDescricao());
             txtQtdItensPedido.setEnabled(true);
@@ -844,7 +839,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 
             Double subTotal = numQtdVendida * produto.getPreco();
             String valorAtualText = lblValTotPedido.getText().replace(",", ".");
-            if (valorAtualText == "")
+            if (valorAtualText.isBlank())
                 valorAtualText = "0";
             Double valorTotalAtual = Double.parseDouble(valorAtualText);
 
@@ -869,24 +864,40 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
             Double numQtdVend = Double.parseDouble(qtdVendidaText.replace(",", "."));
             Double numValorSubTotal = Double.parseDouble(valorSubTotal.replace(",", "."));
             Double valorTotalAtual = Double.parseDouble(valorAtualText);
-
+            qtdItensTotal = qtdItensTotal - numQtdVend;
             lblValTotPedido.setText(String.format("%.2f", valorTotalAtual - numValorSubTotal));
 
             Double numTotalAtualItens = Double.parseDouble(lblQtdItensPedido.getText().replace(",", "."));
             Double novaQuantidade = numTotalAtualItens - numQtdVend;
-
+            
             lblQtdItensPedido.setText(novaQuantidade.toString());
-            pedido.removerItemPedido(itensPedido.get(tblItens.getSelectedRow()));
+
+            ItemPedido itemPedidoParRemover = itensPedido.get(tblItens.getSelectedRow());
+            itemPedidoParRemover.getProduto().setQtdeEstoque(itemPedidoParRemover.getProduto().getQtdeEstoque() + numQtdVend);
+            pedido.removerItemPedido(itemPedidoParRemover);
             itensPedido.remove(tblItens.getSelectedRow());
             atualizarListaDeProdutos();
         }
     }// GEN-LAST:event_btnRemoverItemActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnIncluirActionPerformed
+        System.out.println("==== PEDIDO ====");
+        System.out.println(pedido.getNumero());
+        System.out.println(pedido.getDataEmissao());
+        System.out.println(pedido.getDataPagto());
+        System.out.println(pedido.getFormaPagto());
+        System.out.println(pedido.getSituacao());
+        System.out.println(pedido.getCliente().getCpf());
+        System.out.println(pedido.getVendedor().getCpf());
+        System.out.println("==== ITENS PEDIDO ====");
         // daoPedido.inserir(pedido);
-        // for(int i = 0; i < itensPedidos.size(); i++) {
-        //     daoItemPedido.inserir(itensPedidos.get(i));
-        // }
+        for (ItemPedido elementoItemPedido : itensPedido) {
+            System.out.println(elementoItemPedido.getSequencia());
+            System.out.println(elementoItemPedido.getQtdeVendida());
+            System.out.println(elementoItemPedido.getProduto());
+            System.out.println(elementoItemPedido.getPedido().getNumero());
+            // daoItemPedido.inserir(elementoItemPedido);
+        }
     }// GEN-LAST:event_btnIncluirActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnSairActionPerformed
