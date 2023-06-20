@@ -655,14 +655,6 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAlterarActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_btnAlterarActionPerformed
-
-	private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnExcluirActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_btnExcluirActionPerformed
-
 	private void formWindowOpened(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowOpened
 		conexao = new Conexao("db_nicolas", "admin"); // usuario e senha
 		conexao.setDriver("oracle.jdbc.driver.OracleDriver");
@@ -704,6 +696,12 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 			btnAlterar.setEnabled(true);
 			btnExcluir.setEnabled(true);
 			btnRemoverItem.setEnabled(true);
+
+            itensPedido = pedido.getItensPedido();
+            cliente = pedido.getCliente();
+            vendedor = pedido.getVendedor();
+
+            atualizarListaDeProdutos();
 		}
 
 	}// GEN-LAST:event_btnConsultarPedActionPerformed
@@ -725,7 +723,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 		pedido = new Pedido(txtNumPedido.getText(), txtfDtPedido.getText());
 
 		// cliente = daoCliente.consultar(cpfCliente);
-		cliente = new Cliente(cpfCliente, "nome", 100.0);
+		cliente = new Cliente(cpfCliente, "nome cliente", 500.0);
 
 		if (cliente == null) {
 			JOptionPane.showMessageDialog(this, "Cliente não encontrado.", "Cliente", JOptionPane.WARNING_MESSAGE);
@@ -781,8 +779,8 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 		}
 		produto = null;
 		// produto = daoProduto.consultar(codProduto);
-		System.out.println(codProduto);
-		if (codProduto == "1") {
+		System.out.println("("+codProduto+")");
+		if ("1".equals(codProduto)) {
 			produto = new Produto(codProduto, "produto x");
 			produto.setPreco(100);
 			produto.setQtdeEstoque(10);
@@ -836,20 +834,6 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 			pedido.addItemPedido(itemPedido);
 			itensPedido.add(itemPedido);
 
-			Double subTotal = numQtdVendida * produto.getPreco();
-			String valorAtualText = "0.0";
-			if (!(lblValTotPedido.getText().isEmpty() || lblValTotPedido.getText() == " "
-					|| lblValTotPedido.getText() == "")) {
-				valorAtualText = lblValTotPedido.getText();
-			}
-
-			Double valorTotalAtual = Double.parseDouble(valorAtualText.replace(",", "."));
-
-			lblValTotPedido.setText(String.format("%.2f", valorTotalAtual + subTotal));
-
-			qtdItensTotal = (qtdItensTotal + numQtdVendida);
-			lblQtdItensPedido.setText(String.format("%.2f", qtdItensTotal));
-
 			btnIncluir.setEnabled(true);
 			atualizarListaDeProdutos();
 		}
@@ -859,21 +843,6 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 		if (tblItens.getSelectedRow() == -1) {
 			JOptionPane.showMessageDialog(this, "Selecione uma linha", "Produtos", JOptionPane.WARNING_MESSAGE);
 		} else {
-			String valorSubTotal = tableModel.getValueAt(tblItens.getSelectedRow(), 4).toString();
-			String qtdVendidaText = tableModel.getValueAt(tblItens.getSelectedRow(), 3).toString();
-			String valorAtualText = lblValTotPedido.getText().replace(",", ".");
-
-			Double numQtdVend = Double.parseDouble(qtdVendidaText.replace(",", "."));
-			Double numValorSubTotal = Double.parseDouble(valorSubTotal.replace(",", "."));
-			Double valorTotalAtual = Double.parseDouble(valorAtualText);
-			qtdItensTotal = qtdItensTotal - numQtdVend;
-			lblValTotPedido.setText(String.format("%.2f", valorTotalAtual - numValorSubTotal));
-
-			Double numTotalAtualItens = Double.parseDouble(lblQtdItensPedido.getText().replace(",", "."));
-			Double novaQuantidade = numTotalAtualItens - numQtdVend;
-
-			lblQtdItensPedido.setText(novaQuantidade.toString());
-
 			ItemPedido itemPedidoParRemover = itensPedido.get(tblItens.getSelectedRow());
 
 			pedido.removerItemPedido(itemPedidoParRemover);
@@ -885,7 +854,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 	private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnIncluirActionPerformed
 		System.out.println("==== PEDIDO ====");
 		pedido.setFormaPagto(rbtnAVista.isSelected());
-        
+
 		System.out.println(pedido.getNumero());
 		System.out.println(pedido.getDataEmissao());
 		System.out.println(pedido.getDataPagto());
@@ -924,8 +893,13 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 
         txtQtdItensPedido.setText("");
         txtQtdItensPedido.setEnabled(false);
+        btnConsultarPro.setEnabled(false);
+        btnAddItem.setEnabled(false);
+        btnRemoverItem.setEnabled(false);
         lblValTotPedido.setText("");
         lblQtdItensPedido.setText("");
+
+        btnIncluir.setEnabled(false);
 
         rbtnAPrazo.setEnabled(false);
         rbtnAVista.setEnabled(false);
@@ -939,11 +913,28 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
         atualizarListaDeProdutos();
 	}// GEN-LAST:event_btnIncluirActionPerformed
 
+	private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAlterarActionPerformed
+        if (JOptionPane.showConfirmDialog(this, "Confirma Alteração?") == 0) {
+            pedido.setDataPagto(txtfDtPedido.getText());
+            pedido.setCliente(cliente);
+            pedido.setVendedor(vendedor);
+    		pedido.setFormaPagto(rbtnAVista.isSelected());
+            
+            daoPedido.alterar(pedido);
+        }       
+    }// GEN-LAST:event_btnAlterarActionPerformed
+
+	private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnExcluirActionPerformed
+        daoPedido.excluir(pedido);
+	}// GEN-LAST:event_btnExcluirActionPerformed
+
 	private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnSairActionPerformed
 		dispose();
 	}// GEN-LAST:event_btnSairActionPerformed
 
 	private void atualizarListaDeProdutos() {
+        Double qtdItensTotal = 0.0;
+        Double total = 0.0;
 		tableModel = (DefaultTableModel) tblItens.getModel();
 		tableModel.setRowCount(0);
 		for (ItemPedido elementoItemPedido : itensPedido) {
@@ -957,7 +948,11 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 					String.format("%.2f", subTotal)
 			};
 			tableModel.addRow(linha);
+            qtdItensTotal += elementoItemPedido.getQtdeVendida();
+            total += subTotal;
 		}
+        lblValTotPedido.setText(String.format("%.2f", total));
+        lblQtdItensPedido.setText(String.format("%.2f", qtdItensTotal));
 	}
 
 	private boolean validarData(String dateStr) {
@@ -1026,6 +1021,4 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 	private Produto produto = null;
 	private Conexao conexao = null;
 	private DefaultTableModel tableModel = null;
-
-	private double qtdItensTotal = 0.0;
 }

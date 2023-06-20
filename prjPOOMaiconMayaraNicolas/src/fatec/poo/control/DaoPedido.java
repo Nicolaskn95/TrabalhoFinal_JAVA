@@ -1,8 +1,11 @@
 package fatec.poo.control;
 
 import fatec.poo.model.Cliente;
+import fatec.poo.model.ItemPedido;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
@@ -77,6 +80,15 @@ public class DaoPedido {
                 cliente.addPedido(novoPedido);
                 Vendedor vendedor = new DaoVendedor(conn).consultar((rs.getString("VENDEDOR_ID")));
                 vendedor.addPedido(novoPedido);
+                ArrayList<ItemPedido> itensPedido = new DaoItemPedido(conn).consultarPeloPedido(numero);
+                Double valorTotalPedido = 0.0;
+                for (int i = 0; i < itensPedido.size(); i++){
+                    novoPedido.addItemPedido(itensPedido.get(i));
+                    
+                    valorTotalPedido += itensPedido.get(i).getProduto().getPreco() * itensPedido.get(i).getQtdeVendida();
+                }
+                
+                novoPedido.getCliente().setLimiteDisp(novoPedido.getCliente().getLimiteDisp() + valorTotalPedido);
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
@@ -87,10 +99,12 @@ public class DaoPedido {
     public void excluir(Pedido pedido) {
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("DELETE FROM TBPEDIDO WHERE NUMERO = ?");
-
+            ps = conn.prepareStatement("DELETE FROM TBITEMPEDIDO WHERE PEDIDO_ID = ?");
             ps.setString(1, pedido.getNumero());
-
+            ps.execute();
+            
+            ps = conn.prepareStatement("DELETE FROM TBPEDIDO WHERE NUMERO = ?");
+            ps.setString(1, pedido.getNumero());
             ps.execute();
         } catch (SQLException ex) {
             System.out.println(ex.toString());

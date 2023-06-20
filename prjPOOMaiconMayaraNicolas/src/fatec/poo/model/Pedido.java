@@ -66,6 +66,10 @@ public class Pedido {
     public Vendedor getVendedor() {
         return vendedor;
     }
+
+    public ArrayList<ItemPedido> getItensPedido() {
+        return itensPedido;
+    }
     
     public void addItemPedido(ItemPedido itemPedido) {
         itemPedido.setPedido(this);
