@@ -11,7 +11,7 @@ public class Pedido {
     private boolean situacao;
     private Cliente cliente;
     private Vendedor vendedor;
-    private ArrayList<ItemPedido> itensPedido;//multiplicade
+    private ArrayList<ItemPedido> itensPedido;
 
     public Pedido(String numero, String dataEmissao) {
         this.numero = numero;
@@ -72,5 +72,11 @@ public class Pedido {
         itensPedido.add(itemPedido);
         double novoLimiteDisponivel = cliente.getLimiteDisp() - (itemPedido.getQtdeVendida() * itemPedido.getProduto().getPreco());
         cliente.setLimiteDisp(novoLimiteDisponivel);
+    }
+
+    public void removerItemPedido(ItemPedido itemPedido) {
+        double novoLimiteDisponivel = cliente.getLimiteDisp() + (itemPedido.getQtdeVendida() * itemPedido.getProduto().getPreco());
+        cliente.setLimiteDisp(novoLimiteDisponivel);
+        itensPedido.remove(itemPedido);
     }
 }
