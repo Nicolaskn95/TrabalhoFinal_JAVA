@@ -75,8 +75,10 @@ public class Pedido {
     }
 
     public void removerItemPedido(ItemPedido itemPedido) {
-        double novoLimiteDisponivel = cliente.getLimiteDisp() + (itemPedido.getQtdeVendida() * itemPedido.getProduto().getPreco());
+        double quantidadeVendida = itemPedido.getQtdeVendida();
+        double novoLimiteDisponivel = cliente.getLimiteDisp() + (quantidadeVendida * itemPedido.getProduto().getPreco());
         cliente.setLimiteDisp(novoLimiteDisponivel);
+        itemPedido.setQtdeVendida(0);
         itensPedido.remove(itemPedido);
     }
 }
