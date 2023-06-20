@@ -37,8 +37,8 @@ public class GuiCliente extends javax.swing.JFrame {
         lblLimiteDisponivel = new javax.swing.JLabel();
         txtLimCredito = new javax.swing.JTextField();
         txtCep = new javax.swing.JTextField();
-        txtLimiteDisponivel = new javax.swing.JTextField();
         cbxUF = new javax.swing.JComboBox<>();
+        txtLimiteDisponivel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Cliente");
@@ -134,12 +134,12 @@ public class GuiCliente extends javax.swing.JFrame {
 
         txtCep.setEnabled(false);
 
-        txtLimiteDisponivel.setEnabled(false);
-
         cbxUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SE", "TO", "SP" }));
         cbxUF.setToolTipText("");
         cbxUF.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         cbxUF.setEnabled(false);
+
+        txtLimiteDisponivel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -239,9 +239,9 @@ public class GuiCliente extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLimiteDisponivel)
-                    .addComponent(txtLimiteDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtLimCredito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLimiteCredito))
+                    .addComponent(lblLimiteCredito)
+                    .addComponent(txtLimiteDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIncluir)
@@ -541,7 +541,7 @@ public class GuiCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtDdd;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtLimCredito;
-    private javax.swing.JTextField txtLimiteDisponivel;
+    private javax.swing.JLabel txtLimiteDisponivel;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables

@@ -568,6 +568,6 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
     private DaoCliente daoCliente = null;
     private DaoItemPedido daoItemPedido = null;
     private ItemPedido itemPedido = null;
-    private Pedido pedido = null;=
+    private Pedido pedido = null;
     private Conexao conexao = null;
 }
