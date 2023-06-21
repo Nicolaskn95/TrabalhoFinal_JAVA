@@ -12,4 +12,4 @@
 - [X] Primeira Entrega - 18/05/23
 - [X] Segunda Entrega - 25/05/23
 - [X] Terceira Entrega - 05/06/23
-- [ ] Quarta Entrega - 20/06/23
+- [X] Quarta Entrega - 20/06/23
