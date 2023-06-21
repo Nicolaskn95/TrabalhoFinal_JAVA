@@ -54,6 +54,8 @@ public class DaoPedido {
             ps.setString(5, pedido.getCliente().getCpf().replaceAll("[.-]", ""));
             ps.setString(6, pedido.getVendedor().getCpf().replaceAll("[.-]", ""));
             ps.setString(7, pedido.getNumero());
+            DaoItemPedido daoItemPedido = new DaoItemPedido(conn);
+            daoItemPedido.excluirItensDoPedido(pedido.getNumero());
 
             ps.execute();
         } catch (SQLException ex) {

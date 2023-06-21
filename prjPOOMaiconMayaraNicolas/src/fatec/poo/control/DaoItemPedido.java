@@ -114,4 +114,17 @@ public class DaoItemPedido {
             System.out.println(ex.toString());
         }
     }
+    
+    public void excluirItensDoPedido(String numeroPedido) {
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement("DELETE FROM TBITEMPEDIDO WHERE PEDIDO_ID = ?");
+
+            ps.setString(1, numeroPedido);
+
+            ps.execute();
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+    }
 }

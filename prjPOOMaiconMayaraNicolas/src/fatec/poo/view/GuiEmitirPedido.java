@@ -20,6 +20,7 @@ import fatec.poo.model.Vendedor;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -661,6 +662,10 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 		conexao.setConnectionString("jdbc:oracle:thin:@127.0.0.1:1521:xe");
 		daoItemPedido = new DaoItemPedido(conexao.conectar());
 		daoPedido = new DaoPedido(conexao.conectar());
+                daoCliente = new DaoCliente(conexao.conectar());
+                daoVendedor = new DaoVendedor(conexao.conectar());
+                daoProduto = new DaoProduto(conexao.conectar());
+                
 	}// GEN-LAST:event_formWindowOpened
 
 	private void btnConsultarPedActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnConsultarPedActionPerformed
@@ -671,7 +676,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 			return;
 		}
 		pedido = null;
-		// pedido = daoPedido.consultar(txtNumPedido.getText());
+		 pedido = daoPedido.consultar(txtNumPedido.getText());
 
 		if (pedido == null) {
 			txtNumPedido.setEnabled(false);
@@ -684,6 +689,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 			btnConsultarCli.setEnabled(true);
 			btnAlterar.setEnabled(false);
 			btnExcluir.setEnabled(false);
+        btnIncluir.setEnabled(true);
 		} else {
 			txtfDtPedido.setText(pedido.getDataEmissao());
 			txtfCPFCli.setText(pedido.getCliente().getCpf());
@@ -693,13 +699,25 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 
 			btnConsultarPed.setEnabled(false);
 			txtCodProduto.setEnabled(true);
+                        btnConsultarPro.setEnabled(true);
 			btnAlterar.setEnabled(true);
 			btnExcluir.setEnabled(true);
 			btnRemoverItem.setEnabled(true);
-
-            itensPedido = pedido.getItensPedido();
+                        txtfCPFCli.setEnabled(true);
+                        btnConsultarCli.setEnabled(true);
+                        txtfCPFVend.setEnabled(true);
+                        btnConsultarVen.setEnabled(true);
+                        rbtnAPrazo.setEnabled(true);
+                        rbtnAVista.setEnabled(true);
+                        txtfDtPedido.setEnabled(true);
+                        btnAddItem.setEnabled(true);
+                        
+                        itemPedido = null;
+                        itensPedido = null;
+            itensPedido = new ArrayList(pedido.getItensPedido());
             cliente = pedido.getCliente();
             vendedor = pedido.getVendedor();
+        btnIncluir.setEnabled(false);
 
             atualizarListaDeProdutos();
 		}
@@ -722,8 +740,8 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 		}
 		pedido = new Pedido(txtNumPedido.getText(), txtfDtPedido.getText());
 
-		// cliente = daoCliente.consultar(cpfCliente);
-		cliente = new Cliente(cpfCliente, "nome cliente", 500.0);
+		 cliente = daoCliente.consultar(cpfCliente);
+		//cliente = new Cliente(cpfCliente, "nome cliente", 500.0);
 
 		if (cliente == null) {
 			JOptionPane.showMessageDialog(this, "Cliente não encontrado.", "Cliente", JOptionPane.WARNING_MESSAGE);
@@ -751,8 +769,8 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 			txtfCPFVend.requestFocus();
 			return;
 		}
-		// vendedor = daoVendedor.consultar(cpfCVendedor);
-		vendedor = new Vendedor(cpfCVendedor, "nome vendedor", 1000.0);
+		 vendedor = daoVendedor.consultar(cpfCVendedor);
+		//vendedor = new Vendedor(cpfCVendedor, "nome vendedor", 1000.0);
 
 		if (vendedor == null) {
 			JOptionPane.showMessageDialog(this, "Vendedor não encontrado.", "Vendedor", JOptionPane.WARNING_MESSAGE);
@@ -778,19 +796,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 			return;
 		}
 		produto = null;
-		// produto = daoProduto.consultar(codProduto);
-		System.out.println("("+codProduto+")");
-		if ("1".equals(codProduto)) {
-			produto = new Produto(codProduto, "produto x");
-			produto.setPreco(100);
-			produto.setQtdeEstoque(10);
-			produto.setEstoqueMinimo(0);
-		} else {
-			produto = new Produto(codProduto, "produto y");
-			produto.setPreco(50);
-			produto.setQtdeEstoque(5);
-			produto.setEstoqueMinimo(0);
-		}
+		 produto = daoProduto.consultar(codProduto);
 
 		if (produto == null) {
 			JOptionPane.showMessageDialog(this, "Produto não encontrado", "Produto", JOptionPane.WARNING_MESSAGE);
@@ -811,6 +817,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 	}// GEN-LAST:event_btnConsultarProActionPerformed
 
 	private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddItemActionPerformed
+            System.out.println("passou aqui hehe");
 		String qtdVendida = txtQtdItensPedido.getText().replace(",", ".");
 		if (qtdVendida == null || qtdVendida.isEmpty() || !qtdVendida.matches("^\\d+$")
 				|| Double.parseDouble(qtdVendida) <= 0) {
@@ -830,11 +837,12 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 			txtQtdItensPedido.setText("");
 			txtQtdItensPedido.requestFocus();
 		} else {
-			itemPedido = new ItemPedido(itensPedido.size() + 1, numQtdVendida, produto);
+                        Random random = new Random();
+			itemPedido = new ItemPedido(random.nextInt(99999), numQtdVendida, produto);
+                        System.out.println(itensPedido.size() + 1);
 			pedido.addItemPedido(itemPedido);
 			itensPedido.add(itemPedido);
 
-			btnIncluir.setEnabled(true);
 			atualizarListaDeProdutos();
 		}
 	}// GEN-LAST:event_btnAddItemActionPerformed
@@ -843,10 +851,19 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 		if (tblItens.getSelectedRow() == -1) {
 			JOptionPane.showMessageDialog(this, "Selecione uma linha", "Produtos", JOptionPane.WARNING_MESSAGE);
 		} else {
+                    System.out.println("remover");
+                    System.out.println(itensPedido.size());
+                    System.out.println(tblItens.getSelectedRow());
 			ItemPedido itemPedidoParRemover = itensPedido.get(tblItens.getSelectedRow());
 
 			pedido.removerItemPedido(itemPedidoParRemover);
+                        System.out.println("asdsada");
+                    System.out.println(itensPedido.size());
+                    System.out.println(tblItens.getSelectedRow());
 			itensPedido.remove(tblItens.getSelectedRow());
+                        System.out.println("1234");
+                    System.out.println(itensPedido.size());
+                    System.out.println(tblItens.getSelectedRow());
 			atualizarListaDeProdutos();
 		}
 	}// GEN-LAST:event_btnRemoverItemActionPerformed
@@ -862,15 +879,15 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 		System.out.println(pedido.getCliente().getCpf());
 		System.out.println(pedido.getVendedor().getCpf());
 		System.out.println("==== ITENS PEDIDO ====");
-		// daoPedido.inserir(pedido);
+		 daoPedido.inserir(pedido);
 		for (ItemPedido elementoItemPedido : itensPedido) {
 			System.out.println(elementoItemPedido.getSequencia());
 			System.out.println(elementoItemPedido.getQtdeVendida());
 			System.out.println(elementoItemPedido.getProduto());
 			System.out.println(elementoItemPedido.getPedido().getNumero());
-			// daoItemPedido.inserir(elementoItemPedido);
+			 daoItemPedido.inserir(elementoItemPedido);
 		}
-
+                daoCliente.alterar(cliente);
         txtNumPedido.setText("");
         txtNumPedido.requestFocus();
         txtNumPedido.setEnabled(true);
@@ -918,14 +935,104 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
             pedido.setDataPagto(txtfDtPedido.getText());
             pedido.setCliente(cliente);
             pedido.setVendedor(vendedor);
-    		pedido.setFormaPagto(rbtnAVista.isSelected());
-            
+            pedido.setFormaPagto(rbtnAVista.isSelected());
             daoPedido.alterar(pedido);
+            daoItemPedido.excluirItensDoPedido(pedido.getNumero());
+            for (ItemPedido elementoItemPedido : itensPedido) {
+			System.out.println(elementoItemPedido.getSequencia());
+			System.out.println(elementoItemPedido.getQtdeVendida());
+			System.out.println(elementoItemPedido.getProduto());
+			System.out.println(elementoItemPedido.getPedido().getNumero());
+			 daoItemPedido.inserir(elementoItemPedido);
+		}
+        txtNumPedido.setText("");
+        txtNumPedido.requestFocus();
+        txtNumPedido.setEnabled(true);
+        btnConsultarPed.setEnabled(true);
+
+        txtfDtPedido.setText("");
+        txtfDtPedido.setEnabled(false);    
+
+        txtfCPFCli.setText("");
+        txtfCPFCli.setEnabled(false);
+        lblCliente.setText("");
+
+        txtfCPFVend.setText("");
+        txtfCPFVend.setEnabled(false);
+        lblVendedor.setText("");
+
+        txtCodProduto.setText("");
+        txtCodProduto.setEnabled(false);
+        lblProduto.setText("");
+
+        txtQtdItensPedido.setText("");
+        txtQtdItensPedido.setEnabled(false);
+        btnConsultarPro.setEnabled(false);
+        btnAddItem.setEnabled(false);
+        btnRemoverItem.setEnabled(false);
+        lblValTotPedido.setText("");
+        lblQtdItensPedido.setText("");
+
+        btnIncluir.setEnabled(false);
+
+        rbtnAPrazo.setEnabled(false);
+        rbtnAVista.setEnabled(false);
+        rbtnAVista.setSelected(true);
+
+        itensPedido.clear();
+        pedido = null;
+        cliente = null;
+        vendedor = null;
+        produto = null;
+        atualizarListaDeProdutos();
         }       
     }// GEN-LAST:event_btnAlterarActionPerformed
 
 	private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnExcluirActionPerformed
+            if (JOptionPane.showConfirmDialog(this, "Confirmar exclusao?") == 0) {
         daoPedido.excluir(pedido);
+
+        txtNumPedido.setText("");
+        txtNumPedido.requestFocus();
+        txtNumPedido.setEnabled(true);
+        btnConsultarPed.setEnabled(true);
+
+        txtfDtPedido.setText("");
+        txtfDtPedido.setEnabled(false);    
+
+        txtfCPFCli.setText("");
+        txtfCPFCli.setEnabled(false);
+        lblCliente.setText("");
+
+        txtfCPFVend.setText("");
+        txtfCPFVend.setEnabled(false);
+        lblVendedor.setText("");
+
+        txtCodProduto.setText("");
+        txtCodProduto.setEnabled(false);
+        lblProduto.setText("");
+
+        txtQtdItensPedido.setText("");
+        txtQtdItensPedido.setEnabled(false);
+        btnConsultarPro.setEnabled(false);
+        btnAddItem.setEnabled(false);
+        btnRemoverItem.setEnabled(false);
+        lblValTotPedido.setText("");
+        lblQtdItensPedido.setText("");
+
+        btnIncluir.setEnabled(false);
+
+        rbtnAPrazo.setEnabled(false);
+        rbtnAVista.setEnabled(false);
+        rbtnAVista.setSelected(true);
+
+        itensPedido.clear();
+        pedido = null;
+        cliente = null;
+        vendedor = null;
+        produto = null;
+        atualizarListaDeProdutos();
+        }
 	}// GEN-LAST:event_btnExcluirActionPerformed
 
 	private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnSairActionPerformed
@@ -938,6 +1045,8 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 		tableModel = (DefaultTableModel) tblItens.getModel();
 		tableModel.setRowCount(0);
 		for (ItemPedido elementoItemPedido : itensPedido) {
+                    System.out.println(elementoItemPedido.getSequencia());
+                    System.out.println(elementoItemPedido.getProduto().getDescricao());
 			Double precoProduto = elementoItemPedido.getProduto().getPreco();
 			Double subTotal = elementoItemPedido.getQtdeVendida() * precoProduto;
 			String linha[] = {
